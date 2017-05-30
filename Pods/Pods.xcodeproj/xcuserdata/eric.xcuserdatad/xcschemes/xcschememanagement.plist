@@ -4,12 +4,22 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>AFNetworking.xcscheme</key>
+		<key>Alamofire.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>Pods-SeatGeek.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-SeatGeekTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-SeatGeekUITests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,17 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>93BCFB64098E74E5470C87A7D688B8E8</key>
+		<key>43F59717E9E31DAB0BA78978CB55D0E3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A99B97A01B60BB28CD5B71083BE85084</key>
+		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CF671F7E57B92905F1CC91D036D6B4A7</key>
+		<key>ACFD180A4A87E04BFCAB6338A7644DC1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F96C3F16B5795E8B7B42C3D6427DCDFE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F9857D199CC21C7C7297B5A274DBEBA1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

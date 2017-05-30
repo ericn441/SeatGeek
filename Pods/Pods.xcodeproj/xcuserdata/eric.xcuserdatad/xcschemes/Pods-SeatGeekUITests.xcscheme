@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F9857D199CC21C7C7297B5A274DBEBA1"
-               BuildableName = "Pods_SeatGeek.framework"
-               BlueprintName = "Pods-SeatGeek"
+               BlueprintIdentifier = "F96C3F16B5795E8B7B42C3D6427DCDFE"
+               BuildableName = "Pods_SeatGeekUITests.framework"
+               BlueprintName = "Pods-SeatGeekUITests"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F9857D199CC21C7C7297B5A274DBEBA1"
-            BuildableName = "Pods_SeatGeek.framework"
-            BlueprintName = "Pods-SeatGeek"
+            BlueprintIdentifier = "F96C3F16B5795E8B7B42C3D6427DCDFE"
+            BuildableName = "Pods_SeatGeekUITests.framework"
+            BlueprintName = "Pods-SeatGeekUITests"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
