@@ -1,0 +1,6 @@
+framework module Pods_SeatGeek {
+  umbrella header "Pods-SeatGeek-umbrella.h"
+
+  export *
+  module * { export * }
+}
