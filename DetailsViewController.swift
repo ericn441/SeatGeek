@@ -30,29 +30,24 @@ class DetailsViewController: UIViewController {
         } else {
             selectedImage.imageFromServerURL(urlString: selectedItem.imageURL)
         }
-        selectedImage.setBarelyRounded()
+        selectedImage.setBarelyRounded()        
         
-        // configure favorite button
-        if let data: [String:Bool] = UserDefaults.standard.object(forKey: "id") as? [String : Bool] {
-            if let didFavorite = data[selectedItem.id] {
-                if didFavorite {
-                    selectedFavorite.setImage(UIImage(named: "favoriteLarge"), for: .normal)
-                } else {
-                    selectedFavorite.setImage(UIImage(named: "favoriteBorderLarge"), for: .normal)
-                }
-            } else {
-                selectedFavorite.setImage(UIImage(named: "favoriteBorderLarge"), for: .normal)
-            }
+        //update favorite icon if favorited
+        if Favorite.isFavorite(id: selectedItem.id) {
+            selectedFavorite.setImage(UIImage(named: "favoriteLarge"), for: .normal)
+        } else {
+            selectedFavorite.setImage(UIImage(named: "favoriteBorderLarge"), for: .normal)
         }
     }
     @IBAction func didPushFavorite(_ sender: Any) {
         
         if selectedFavorite.imageView?.image == UIImage(named: "favoriteBorderLarge") {
+            Favorite.setFavorite(id: selectedItem.id, isFavorited: true)
             selectedFavorite.setImage(UIImage(named: "favoriteLarge"), for: .normal)
-            DataStorage.saveFavorite([selectedItem.id:true])
+            
         } else {
             selectedFavorite.setImage(UIImage(named: "favoriteBorderLarge"), for: .normal)
-            DataStorage.saveFavorite([selectedItem.id:false])
+            Favorite.setFavorite(id: selectedItem.id, isFavorited: false)
         }
         
     }

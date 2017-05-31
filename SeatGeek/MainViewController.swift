@@ -69,7 +69,10 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
             if let searchQueryFormatted = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
                 
                 fetchResults(searchQueryFormatted) { (JSON) in
-                    self.parseSearchResults(json: JSON)
+                    self.searchItems.removeAll()
+                    let parsedResult = SeatGeekEventsResult(json: JSON)
+                    self.searchItems = parsedResult.getParsedResults()
+                    self.tableView.reloadData()
                 }
             }
         }
@@ -81,7 +84,6 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
         let str = "Welcome to SeatGeek"
         let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)]
         return NSAttributedString(string: str, attributes: attrs)
-        
     }
     func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         
@@ -121,16 +123,9 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
         cell.previewIcon.setRounded()
         
         //set favorite
-        cell.favoriteImage.isHidden = true
-        if let data: [String:Bool] = UserDefaults.standard.object(forKey: "id") as? [String : Bool] {
-            if let didFavorite = data[searchItems[indexPath.row].id] {
-                if didFavorite {
-                    cell.favoriteImage.isHidden = false
-                } else {
-                    cell.favoriteImage.isHidden = true
-                }
-            }
-        }
+        cell.favoriteImage.isHidden = !Favorite.isFavorite(id: searchItems[indexPath.row].id)
+        
+        
         
         return cell
     }
@@ -168,37 +163,13 @@ extension MainViewController: UISearchResultsUpdating {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) { //adds micro delay to search query
-        searchItems.removeAll()
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(MainViewController.performSearchAfterDelay), object: nil)
-        self.perform(#selector(MainViewController.performSearchAfterDelay), with: nil, afterDelay: 0.5)
-    }
-    
-    func parseSearchResults(json: JSON) {
         
-        for results in json["events"].arrayValue {
-            
-            let id = results["id"].stringValue
-            let title = results["title"].stringValue
-            let locationDetail = results["venue"]["display_location"].stringValue
-            let time = convertToCST(utcTime: results["datetime_local"].stringValue)
-            let imageURL = results["performers"][0]["image"].stringValue
-            
-            self.searchItems.append(SearchItem(id: id, title: title, detail: locationDetail, time: time, imageURL: imageURL, image: UIImage(named: "placeholder"), didFavor: false))
+        let searchDelay = 0.5 //seconds
+        
+        if !searchText.characters.isEmpty {
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(MainViewController.performSearchAfterDelay), object: nil)
+            self.perform(#selector(MainViewController.performSearchAfterDelay), with: nil, afterDelay: searchDelay)
         }
-        self.tableView.reloadData()
-    }
-    
-    func convertToCST(utcTime: String) -> String {
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        dateFormatter.timeZone = NSTimeZone(name: "UTC")! as TimeZone
-        let date = dateFormatter.date(from: utcTime) // create date from UTC string
-        
-        // change to readable time format and local time zone
-        dateFormatter.dateFormat = "EEE, MMM d, yyyy h:mm a"
-        dateFormatter.timeZone = TimeZone.current
-        return dateFormatter.string(from: date!)
         
     }
 }
