@@ -15,5 +15,4 @@ class ResultsTableViewCell: UITableViewCell {
     @IBOutlet weak var resultDetail: UILabel!
     @IBOutlet weak var resultTime: UILabel!
     
-
 }

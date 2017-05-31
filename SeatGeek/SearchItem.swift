@@ -11,11 +11,11 @@ import UIKit
 
 struct SearchItem {
     
-    let id: String
-    let title : String
-    let detail : String
-    let time: String
-    let imageURL: String
-    let image: UIImage?
-    let didFavor: Bool
+    var id: String
+    var title : String
+    var detail : String
+    var time: String
+    var imageURL: String
+    var image: UIImage?
+    var didFavor: Bool
 }

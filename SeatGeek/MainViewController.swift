@@ -18,6 +18,7 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
     let searchController = UISearchController(searchResultsController: nil)
     var searchItems: [SearchItem] = []
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,14 +31,8 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
     
     }
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden =  true
-        
-        //Status bar style and visibility
+        self.navigationController?.isNavigationBarHidden =  false
         UIApplication.shared.statusBarStyle = .lightContent
-        
-        //Change status bar color
-        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
-        statusBar.backgroundColor = .blue
     }
     
     //MARK: - Search Functions
@@ -96,16 +91,36 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
         
         return cell
     }
+    
+    // MARK: - Segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "toDetail" {
+            
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let detailsVC = segue.destination as! DetailsViewController
+                detailsVC.selectedItem.id = searchItems[indexPath.row].id
+                detailsVC.selectedItem.title = searchItems[indexPath.row].title
+                detailsVC.selectedItem.detail = searchItems[indexPath.row].detail
+                detailsVC.selectedItem.time = searchItems[indexPath.row].time
+                detailsVC.selectedItem.imageURL = searchItems[indexPath.row].imageURL
+                detailsVC.selectedItem.didFavor = searchItems[indexPath.row].didFavor
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
+            
+        }
+        
+        
+    }
 
 }
 
-
+// MARK: - UISearchBar Delegate
 extension MainViewController: UISearchBarDelegate {
-    // MARK: - UISearchBar Delegate
 }
 
+// MARK: - UISearchResultsUpdating Delegate
 extension MainViewController: UISearchResultsUpdating {
-    // MARK: - UISearchResultsUpdating Delegate
     
     func updateSearchResults(for searchController: UISearchController) {
         // do work here if needed
@@ -166,6 +181,10 @@ extension UIImageView {
     
     public func setRounded() { //round corners
         self.layer.cornerRadius = (self.frame.width / 4) //instead of let radius = CGRectGetWidth(self.frame) / 2
+        self.layer.masksToBounds = true
+    }
+    public func setBarelyRounded() { //round corners
+        self.layer.cornerRadius = (self.frame.width / 12) //instead of let radius = CGRectGetWidth(self.frame) / 2
         self.layer.masksToBounds = true
     }
 
