@@ -10,14 +10,13 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSource {
     
     //MARK: - Properties
     @IBOutlet weak var tableView: UITableView!
     let clientID: String = "NzcwNTc5M3wxNDk2MTg0MTU0LjE5"
     let searchController = UISearchController(searchResultsController: nil)
     var searchItems: [SearchItem] = []
-    var searchQueryTextExample = "Texas Rangers"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,8 +27,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         definesPresentationContext = true
         searchController.dimsBackgroundDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
-        
-        
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -69,11 +66,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return searchItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "result", for: indexPath) as! ResultsTableViewCell
+        cell.resultTitle.text = searchItems[indexPath.row].title
+        cell.resultDetail.text = searchItems[indexPath.row].detail
+        cell.resultTime.text = searchItems[indexPath.row].time
         return cell
     }
 
@@ -94,19 +94,43 @@ extension MainViewController: UISearchResultsUpdating {
             if let searchQueryFormatted = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
                 
                 fetchResults("Texas+Rangers") { (JSON) in
-                    //print(JSON)
-                    for results in JSON["events"].arrayValue
-                    {
-                        print(results["id"].stringValue)
-                        print(results["title"].stringValue)
-                        print(results["venue"]["display_location"])
-                        print(results["datetime_local"].stringValue)
-                        print(results["performers"][0]["image"].stringValue)
-                    }
-                    //self.searchItems.append(SearchItem(id: "", title: "", detail: "", time: "", imageURL: "", didFavor: false))
+                    self.parseSearchResults(json: JSON)
                 }
             }
         }
+    }
+    func parseSearchResults(json: JSON) {
+        
+        //print(results["id"].stringValue)
+        //print(results["title"].stringValue)
+        //print(results["venue"]["display_location"].stringValue)
+        //print(results["datetime_local"].stringValue)
+        //print(results["performers"][0]["image"].stringValue)
+        
+        for results in json["events"].arrayValue {
+            
+            let id = results["id"].stringValue
+            let title = results["title"].stringValue
+            let locationDetail = results["venue"]["display_location"].stringValue
+            let time = convertToCST(utcTime: results["datetime_local"].stringValue)
+            let imageURL = results["performers"][0]["image"].stringValue
+            
+            self.searchItems.append(SearchItem(id: id, title: title, detail: locationDetail, time: time, imageURL: imageURL, didFavor: false))
+        }
+        self.tableView.reloadData()
+    }
+    
+    func convertToCST(utcTime: String) -> String {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.timeZone = NSTimeZone(name: "UTC")! as TimeZone
+        let date = dateFormatter.date(from: utcTime) // create date from UTC string
+        
+        // change to a readable time format and change to local time zone
+        dateFormatter.dateFormat = "EEE, MMM d, yyyy h:mm a"
+        dateFormatter.timeZone = TimeZone.current
+        return dateFormatter.string(from: date!)
         
     }
 }
