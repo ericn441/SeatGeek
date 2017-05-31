@@ -12,12 +12,12 @@ import SwiftyJSON
 
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    //MARK: - Properties
     @IBOutlet weak var tableView: UITableView!
-    
     let clientID: String = "NzcwNTc5M3wxNDk2MTg0MTU0LjE5"
-    
     let searchController = UISearchController(searchResultsController: nil)
-    var searchQueryText = "Texas Rangers"
+    var searchItems: [SearchItem] = []
+    var searchQueryTextExample = "Texas Rangers"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,16 +29,21 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         searchController.dimsBackgroundDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
         
-        if let searchQueryFormatted = searchQueryText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
-            
-            fetchResults(searchQueryFormatted) { (JSON) in
-                print(JSON)
-            }
-        }
         
         
-
     }
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden =  true
+        
+        //Status bar style and visibility
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+        //Change status bar color
+        let statusBar: UIView = UIApplication.shared.value(forKey: "statusBar") as! UIView
+        statusBar.backgroundColor = .blue
+    }
+    
+    //MARK: - Search Functions
     func fetchResults(_ searchText: String, completionHandler: @escaping (JSON) ->()) {
         
         let searchQuery = "https://api.seatgeek.com/2/events?q=" + searchText
@@ -56,6 +61,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
     }
+    
     
     // MARK: - Table View
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -76,16 +82,44 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
 extension MainViewController: UISearchBarDelegate {
     // MARK: - UISearchBar Delegate
-    /*func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-     filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
-     }*/
 }
 
 extension MainViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
+    
     func updateSearchResults(for searchController: UISearchController) {
-        //let searchBar = searchController.searchBar
-        //let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
-        //filterContentForSearchText(searchController.searchBar.text!)
+        
+        if let searchText = searchController.searchBar.text {
+            
+            if let searchQueryFormatted = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
+                
+                fetchResults("Texas+Rangers") { (JSON) in
+                    //print(JSON)
+                    for results in JSON["events"].arrayValue
+                    {
+                        print(results["id"].stringValue)
+                        print(results["title"].stringValue)
+                        print(results["venue"]["display_location"])
+                        print(results["datetime_local"].stringValue)
+                        print(results["performers"][0]["image"].stringValue)
+                    }
+                    //self.searchItems.append(SearchItem(id: "", title: "", detail: "", time: "", imageURL: "", didFavor: false))
+                }
+            }
+        }
+        
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
