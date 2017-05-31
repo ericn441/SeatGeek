@@ -6,7 +6,8 @@ target 'SeatGeek' do
   use_frameworks!
   pod 'Alamofire'
   pod 'SwiftyJSON'
-
+  pod 'DZNEmptyDataSet'
+  
   # Pods for SeatGeek
 
   target 'SeatGeekTests' do

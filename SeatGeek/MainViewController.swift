@@ -9,8 +9,9 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import DZNEmptyDataSet
 
-class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSource {
+class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSource,  DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
     
     //MARK: - Properties
     @IBOutlet weak var tableView: UITableView!
@@ -22,6 +23,10 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //empty tableview
+        tableView.emptyDataSetSource = self
+        tableView.emptyDataSetDelegate = self
+        
         //search controller
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
@@ -31,6 +36,7 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
     
     }
     override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
         self.navigationController?.isNavigationBarHidden =  false
         UIApplication.shared.statusBarStyle = .lightContent
     }
@@ -43,6 +49,9 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
         Alamofire.request(searchQuery, method: .get, parameters: ["client_id":clientID]).responseJSON{ response in
             guard response.result.error == nil else
             {
+                let alert = UIAlertController(title: "Internet Offline", message: "Check your connection and retry", preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "OK", style: .default) { action in })
+                self.present(alert, animated: true, completion: nil)
                 print(response.result.error!)
                 return
             }
@@ -64,7 +73,26 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
             }
         }
     }
-    
+    // MARK: - Empty Table View
+    func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        
+        let str = "Welcome to SeatGeek"
+        let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.headline)]
+        return NSAttributedString(string: str, attributes: attrs)
+        
+    }
+    func description(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
+        
+        let str = "Tap the search bar to begin searching for events. \n\n Example: Houston Rockets"
+        let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
+        return NSAttributedString(string: str, attributes: attrs)
+    }
+    func buttonTitle(forEmptyDataSet scrollView: UIScrollView!, for state: UIControlState) -> NSAttributedString! {
+        
+            let str = ""
+            let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
+            return NSAttributedString(string: str, attributes: attrs)
+    }
     // MARK: - Table View
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -88,6 +116,18 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
         }
         cell.previewIcon.contentMode = .scaleAspectFill
         cell.previewIcon.setRounded()
+        
+        //set favorite
+        cell.favoriteImage.isHidden = true
+        if let data: [String:Bool] = UserDefaults.standard.object(forKey: "id") as? [String : Bool] {
+            if let didFavorite = data[searchItems[indexPath.row].id] {
+                if didFavorite {
+                    cell.favoriteImage.isHidden = false
+                } else {
+                    cell.favoriteImage.isHidden = true
+                }
+            }
+        }
         
         return cell
     }

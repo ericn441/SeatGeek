@@ -14,5 +14,6 @@ class ResultsTableViewCell: UITableViewCell {
     @IBOutlet weak var resultTitle: UILabel!
     @IBOutlet weak var resultDetail: UILabel!
     @IBOutlet weak var resultTime: UILabel!
+    @IBOutlet weak var favoriteImage: UIImageView!
     
 }

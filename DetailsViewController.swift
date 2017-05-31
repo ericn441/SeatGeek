@@ -33,6 +33,7 @@ class DetailsViewController: UIViewController {
         }
         selectedImage.setBarelyRounded()
         
+        //configure favorite button
         if let data: [String:Bool] = UserDefaults.standard.object(forKey: "id") as? [String : Bool] {
             if let didFavorite = data[selectedItem.id] {
                 if didFavorite {
