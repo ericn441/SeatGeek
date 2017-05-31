@@ -18,9 +18,6 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
     let searchController = UISearchController(searchResultsController: nil)
     var searchItems: [SearchItem] = []
     
-    var task: URLSessionDownloadTask!
-    var session: URLSession!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,11 +27,7 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
         definesPresentationContext = true
         searchController.dimsBackgroundDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
-        
-        //image downloader
-        session = URLSession.shared
-        task = URLSessionDownloadTask()
-        
+    
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden =  true
@@ -65,7 +58,17 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
             }
         }
     }
-    
+    func performSearchAfterDelay() {
+        if let searchText = searchController.searchBar.text {
+            
+            if let searchQueryFormatted = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
+                
+                fetchResults(searchQueryFormatted) { (JSON) in
+                    self.parseSearchResults(json: JSON)
+                }
+            }
+        }
+    }
     
     // MARK: - Table View
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -83,7 +86,11 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
         cell.resultTime.text = searchItems[indexPath.row].time
         
         //download preview image
-        cell.previewIcon.imageFromServerURL(urlString: searchItems[indexPath.row].imageURL)
+        if searchItems[indexPath.row].imageURL.isEmpty { //handle missing links
+            cell.previewIcon.image = UIImage(named: "placeholder")
+        } else {
+            cell.previewIcon.imageFromServerURL(urlString: searchItems[indexPath.row].imageURL)
+        }
         cell.previewIcon.contentMode = .scaleAspectFill
         cell.previewIcon.setRounded()
         
@@ -101,24 +108,16 @@ extension MainViewController: UISearchResultsUpdating {
     // MARK: - UISearchResultsUpdating Delegate
     
     func updateSearchResults(for searchController: UISearchController) {
-        
-        if let searchText = searchController.searchBar.text {
-            
-            if let searchQueryFormatted = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) {
-                
-                fetchResults("Texas+Rangers") { (JSON) in
-                    self.parseSearchResults(json: JSON)
-                }
-            }
-        }
+        // do work here if needed
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        searchItems.removeAll()
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(MainViewController.performSearchAfterDelay), object: nil)
+        self.perform(#selector(MainViewController.performSearchAfterDelay), with: nil, afterDelay: 0.5)
+    }
+    
     func parseSearchResults(json: JSON) {
-        
-        //print(results["id"].stringValue)
-        //print(results["title"].stringValue)
-        //print(results["venue"]["display_location"].stringValue)
-        //print(results["datetime_local"].stringValue)
-        //print(results["performers"][0]["image"].stringValue)
         
         for results in json["events"].arrayValue {
             
