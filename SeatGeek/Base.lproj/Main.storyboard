@@ -150,7 +150,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="55" id="vKl-Fp-Zzn"/>
                                 </constraints>
-                                <state key="normal" image="favoriteBoarderLarge"/>
+                                <state key="normal" image="favoriteBorderLarge"/>
                                 <connections>
                                     <action selector="didPushFavorite:" destination="B7e-eb-TVL" eventType="touchUpInside" id="KGG-io-9rj"/>
                                 </connections>
@@ -217,6 +217,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="favoriteBoarderLarge" width="40" height="37"/>
+        <image name="favoriteBorderLarge" width="40" height="37"/>
     </resources>
 </document>

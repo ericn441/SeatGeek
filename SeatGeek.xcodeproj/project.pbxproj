@@ -18,6 +18,7 @@
 		077779931EDE3098003954C3 /* ResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077779921EDE3098003954C3 /* ResultsTableViewCell.swift */; };
 		077779951EDE3D66003954C3 /* SearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077779941EDE3D66003954C3 /* SearchItem.swift */; };
 		077779971EDE6A84003954C3 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077779961EDE6A84003954C3 /* DetailsViewController.swift */; };
+		077779991EDE7A59003954C3 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 077779981EDE7A59003954C3 /* DataStorage.swift */; };
 		960109BE7E8D71558459553D /* Pods_SeatGeek.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7457599856CA34AF32CD437D /* Pods_SeatGeek.framework */; };
 		AE898812A36A7093520C048D /* Pods_SeatGeekTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 469C4DD157BDBC55BF06992C /* Pods_SeatGeekTests.framework */; };
 		CC9BDEDBB59FE0E142A36C22 /* Pods_SeatGeekUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58903AAEA2F96A85CA1D2E49 /* Pods_SeatGeekUITests.framework */; };
@@ -59,6 +60,7 @@
 		077779921EDE3098003954C3 /* ResultsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsTableViewCell.swift; sourceTree = "<group>"; };
 		077779941EDE3D66003954C3 /* SearchItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchItem.swift; sourceTree = "<group>"; };
 		077779961EDE6A84003954C3 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailsViewController.swift; path = ../DetailsViewController.swift; sourceTree = "<group>"; };
+		077779981EDE7A59003954C3 /* DataStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		0A48ADDC76EBAF1592BA0937 /* Pods-SeatGeekTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeatGeekTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SeatGeekTests/Pods-SeatGeekTests.release.xcconfig"; sourceTree = "<group>"; };
 		43171F7C04F17990B5917A88 /* Pods-SeatGeekUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeatGeekUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SeatGeekUITests/Pods-SeatGeekUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		469C4DD157BDBC55BF06992C /* Pods_SeatGeekTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SeatGeekTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +130,7 @@
 				077779961EDE6A84003954C3 /* DetailsViewController.swift */,
 				077779921EDE3098003954C3 /* ResultsTableViewCell.swift */,
 				077779941EDE3D66003954C3 /* SearchItem.swift */,
+				077779981EDE7A59003954C3 /* DataStorage.swift */,
 				07360A2E1EDE231500855391 /* Main.storyboard */,
 				07360A311EDE231500855391 /* Assets.xcassets */,
 				07360A331EDE231500855391 /* LaunchScreen.storyboard */,
@@ -465,6 +468,7 @@
 				077779951EDE3D66003954C3 /* SearchItem.swift in Sources */,
 				07360A591EDE23C000855391 /* MainViewController.swift in Sources */,
 				07360A2B1EDE231500855391 /* AppDelegate.swift in Sources */,
+				077779991EDE7A59003954C3 /* DataStorage.swift in Sources */,
 				077779931EDE3098003954C3 /* ResultsTableViewCell.swift in Sources */,
 				077779971EDE6A84003954C3 /* DetailsViewController.swift in Sources */,
 			);
