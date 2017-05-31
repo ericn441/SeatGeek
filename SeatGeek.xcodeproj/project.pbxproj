@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		071654771EDF540600801253 /* Favorite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071654761EDF540600801253 /* Favorite.swift */; };
+		071654771EDF540600801253 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071654761EDF540600801253 /* Favorites.swift */; };
 		071654791EDF60A300801253 /* SeatGeekEventsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071654781EDF60A300801253 /* SeatGeekEventsResult.swift */; };
+		0716547B1EDF69D900801253 /* SeatGeekAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0716547A1EDF69D900801253 /* SeatGeekAPI.swift */; };
+		0716547E1EDF720B00801253 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0716547D1EDF720B00801253 /* UIImageViewExtension.swift */; };
 		07360A2B1EDE231500855391 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07360A2A1EDE231500855391 /* AppDelegate.swift */; };
 		07360A301EDE231500855391 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 07360A2E1EDE231500855391 /* Main.storyboard */; };
 		07360A321EDE231500855391 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07360A311EDE231500855391 /* Assets.xcassets */; };
@@ -44,8 +46,10 @@
 
 /* Begin PBXFileReference section */
 		0324D74C5E33B7E2C0941FFB /* Pods-SeatGeekUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SeatGeekUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SeatGeekUITests/Pods-SeatGeekUITests.release.xcconfig"; sourceTree = "<group>"; };
-		071654761EDF540600801253 /* Favorite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorite.swift; sourceTree = "<group>"; };
+		071654761EDF540600801253 /* Favorites.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		071654781EDF60A300801253 /* SeatGeekEventsResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeatGeekEventsResult.swift; sourceTree = "<group>"; };
+		0716547A1EDF69D900801253 /* SeatGeekAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeatGeekAPI.swift; sourceTree = "<group>"; };
+		0716547D1EDF720B00801253 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		07360A271EDE231500855391 /* SeatGeek.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeatGeek.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07360A2A1EDE231500855391 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07360A2F1EDE231500855391 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -101,6 +105,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0716547C1EDF71F900801253 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0716547D1EDF720B00801253 /* UIImageViewExtension.swift */,
+			);
+			name = extensions;
+			sourceTree = "<group>";
+		};
+		0716547F1EDF722B00801253 /* viewcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				07360A581EDE23C000855391 /* MainViewController.swift */,
+				077779961EDE6A84003954C3 /* DetailsViewController.swift */,
+			);
+			name = viewcontrollers;
+			sourceTree = "<group>";
+		};
+		071654801EDF726F00801253 /* SeatGeek */ = {
+			isa = PBXGroup;
+			children = (
+				0716547A1EDF69D900801253 /* SeatGeekAPI.swift */,
+				071654761EDF540600801253 /* Favorites.swift */,
+				071654781EDF60A300801253 /* SeatGeekEventsResult.swift */,
+			);
+			name = SeatGeek;
+			sourceTree = "<group>";
+		};
+		071654811EDF728000801253 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				077779941EDE3D66003954C3 /* SearchItem.swift */,
+			);
+			name = data;
+			sourceTree = "<group>";
+		};
+		071654821EDF728E00801253 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				077779921EDE3098003954C3 /* ResultsTableViewCell.swift */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
 		07360A1E1EDE231500855391 = {
 			isa = PBXGroup;
 			children = (
@@ -127,13 +174,12 @@
 		07360A291EDE231500855391 /* SeatGeek */ = {
 			isa = PBXGroup;
 			children = (
+				071654821EDF728E00801253 /* views */,
+				071654811EDF728000801253 /* data */,
+				071654801EDF726F00801253 /* SeatGeek */,
+				0716547F1EDF722B00801253 /* viewcontrollers */,
+				0716547C1EDF71F900801253 /* extensions */,
 				07360A2A1EDE231500855391 /* AppDelegate.swift */,
-				07360A581EDE23C000855391 /* MainViewController.swift */,
-				071654781EDF60A300801253 /* SeatGeekEventsResult.swift */,
-				077779961EDE6A84003954C3 /* DetailsViewController.swift */,
-				071654761EDF540600801253 /* Favorite.swift */,
-				077779921EDE3098003954C3 /* ResultsTableViewCell.swift */,
-				077779941EDE3D66003954C3 /* SearchItem.swift */,
 				07360A2E1EDE231500855391 /* Main.storyboard */,
 				07360A311EDE231500855391 /* Assets.xcassets */,
 				07360A331EDE231500855391 /* LaunchScreen.storyboard */,
@@ -469,12 +515,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				077779951EDE3D66003954C3 /* SearchItem.swift in Sources */,
-				071654771EDF540600801253 /* Favorite.swift in Sources */,
+				071654771EDF540600801253 /* Favorites.swift in Sources */,
 				07360A591EDE23C000855391 /* MainViewController.swift in Sources */,
 				07360A2B1EDE231500855391 /* AppDelegate.swift in Sources */,
 				077779931EDE3098003954C3 /* ResultsTableViewCell.swift in Sources */,
+				0716547E1EDF720B00801253 /* UIImageViewExtension.swift in Sources */,
 				077779971EDE6A84003954C3 /* DetailsViewController.swift in Sources */,
 				071654791EDF60A300801253 /* SeatGeekEventsResult.swift in Sources */,
+				0716547B1EDF69D900801253 /* SeatGeekAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

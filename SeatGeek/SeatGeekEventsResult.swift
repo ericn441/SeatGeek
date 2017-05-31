@@ -23,7 +23,7 @@ class SeatGeekEventsResult {
             let time = convertToCST(utcTime: results["datetime_local"].stringValue)
             let imageURL = results["performers"][0]["image"].stringValue
             
-            self.parsedSearchItems.append(SearchItem(id: id, title: title, detail: locationDetail, time: time, imageURL: imageURL, image: nil, didFavor: Favorite.isFavorite(id: id)))
+            self.parsedSearchItems.append(SearchItem(id: id, title: title, detail: locationDetail, time: time, imageURL: imageURL, image: nil, didFavor: Favorites.isFavorite(id: id)))
             
         }
     }

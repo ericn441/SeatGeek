@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Favorite {
+class Favorites {
     
     static func isFavorite(id: String) -> Bool {
         

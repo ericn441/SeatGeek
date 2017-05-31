@@ -33,7 +33,7 @@ class DetailsViewController: UIViewController {
         selectedImage.setBarelyRounded()        
         
         //update favorite icon if favorited
-        if Favorite.isFavorite(id: selectedItem.id) {
+        if Favorites.isFavorite(id: selectedItem.id) {
             selectedFavorite.setImage(UIImage(named: "favoriteLarge"), for: .normal)
         } else {
             selectedFavorite.setImage(UIImage(named: "favoriteBorderLarge"), for: .normal)
@@ -42,12 +42,12 @@ class DetailsViewController: UIViewController {
     @IBAction func didPushFavorite(_ sender: Any) {
         
         if selectedFavorite.imageView?.image == UIImage(named: "favoriteBorderLarge") {
-            Favorite.setFavorite(id: selectedItem.id, isFavorited: true)
+            Favorites.setFavorite(id: selectedItem.id, isFavorited: true)
             selectedFavorite.setImage(UIImage(named: "favoriteLarge"), for: .normal)
             
         } else {
             selectedFavorite.setImage(UIImage(named: "favoriteBorderLarge"), for: .normal)
-            Favorite.setFavorite(id: selectedItem.id, isFavorited: false)
+            Favorites.setFavorite(id: selectedItem.id, isFavorited: false)
         }
         
     }
