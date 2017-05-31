@@ -11,7 +11,7 @@ import Foundation
 struct DataStorage
 {
     static let userDefaults = UserDefaults.standard
-    static func saveFavorite(_ dict: [String:Bool])
+    static func saveFavorite(_ dict: [String:Bool]) //persistantly save favorites
     {
         userDefaults.set(dict, forKey: "id")
         userDefaults.synchronize()

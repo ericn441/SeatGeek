@@ -12,7 +12,6 @@ class DetailsViewController: UIViewController {
 
     // MARK: - Properties
     var selectedItem = SearchItem(id: "", title: "", detail: "", time: "", imageURL: "", image: nil, didFavor: false)
-    var didFavor = [String:Bool]()
     
     @IBOutlet weak var selectedTitle: UILabel!
     @IBOutlet weak var selectedImage: UIImageView!
@@ -33,7 +32,7 @@ class DetailsViewController: UIViewController {
         }
         selectedImage.setBarelyRounded()
         
-        //configure favorite button
+        // configure favorite button
         if let data: [String:Bool] = UserDefaults.standard.object(forKey: "id") as? [String : Bool] {
             if let didFavorite = data[selectedItem.id] {
                 if didFavorite {

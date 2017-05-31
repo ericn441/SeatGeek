@@ -49,6 +49,7 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
         Alamofire.request(searchQuery, method: .get, parameters: ["client_id":clientID]).responseJSON{ response in
             guard response.result.error == nil else
             {
+                //offline handler
                 let alert = UIAlertController(title: "Internet Offline", message: "Check your connection and retry", preferredStyle: .actionSheet)
                 alert.addAction(UIAlertAction(title: "OK", style: .default) { action in })
                 self.present(alert, animated: true, completion: nil)
@@ -73,6 +74,7 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
             }
         }
     }
+    
     // MARK: - Empty Table View
     func title(forEmptyDataSet scrollView: UIScrollView!) -> NSAttributedString! {
         
@@ -93,6 +95,7 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
             let attrs = [NSFontAttributeName: UIFont.preferredFont(forTextStyle: UIFontTextStyle.body)]
             return NSAttributedString(string: str, attributes: attrs)
     }
+    
     // MARK: - Table View
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -149,24 +152,22 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
             }
             
         }
-        
-        
     }
 
 }
 
 // MARK: - UISearchBar Delegate
 extension MainViewController: UISearchBarDelegate {
+    // do work here if needed
 }
 
-// MARK: - UISearchResultsUpdating Delegate
 extension MainViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         // do work here if needed
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) { //adds micro delay to search query
         searchItems.removeAll()
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(MainViewController.performSearchAfterDelay), object: nil)
         self.perform(#selector(MainViewController.performSearchAfterDelay), with: nil, afterDelay: 0.5)
@@ -202,6 +203,7 @@ extension MainViewController: UISearchResultsUpdating {
     }
 }
 
+// MARK: - UIImageView Extensions
 extension UIImageView {
     
     public func imageFromServerURL(urlString: String) { //async image downloader
@@ -219,12 +221,12 @@ extension UIImageView {
         }).resume()
     }
     
-    public func setRounded() { //round corners
-        self.layer.cornerRadius = (self.frame.width / 4) //instead of let radius = CGRectGetWidth(self.frame) / 2
+    public func setRounded() { //round corners for preview icon
+        self.layer.cornerRadius = (self.frame.width / 4)
         self.layer.masksToBounds = true
     }
-    public func setBarelyRounded() { //round corners
-        self.layer.cornerRadius = (self.frame.width / 12) //instead of let radius = CGRectGetWidth(self.frame) / 2
+    public func setBarelyRounded() { //round corners for full image
+        self.layer.cornerRadius = (self.frame.width / 12)
         self.layer.masksToBounds = true
     }
 
