@@ -18,6 +18,9 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
     let searchController = UISearchController(searchResultsController: nil)
     var searchItems: [SearchItem] = []
     
+    var task: URLSessionDownloadTask!
+    var session: URLSession!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,6 +30,10 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
         definesPresentationContext = true
         searchController.dimsBackgroundDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
+        
+        //image downloader
+        session = URLSession.shared
+        task = URLSessionDownloadTask()
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -74,6 +81,12 @@ class MainViewController: UIViewController, UITabBarDelegate, UITableViewDataSou
         cell.resultTitle.text = searchItems[indexPath.row].title
         cell.resultDetail.text = searchItems[indexPath.row].detail
         cell.resultTime.text = searchItems[indexPath.row].time
+        
+        //download preview image
+        cell.previewIcon.imageFromServerURL(urlString: searchItems[indexPath.row].imageURL)
+        cell.previewIcon.contentMode = .scaleAspectFill
+        cell.previewIcon.setRounded()
+        
         return cell
     }
 
@@ -115,7 +128,7 @@ extension MainViewController: UISearchResultsUpdating {
             let time = convertToCST(utcTime: results["datetime_local"].stringValue)
             let imageURL = results["performers"][0]["image"].stringValue
             
-            self.searchItems.append(SearchItem(id: id, title: title, detail: locationDetail, time: time, imageURL: imageURL, didFavor: false))
+            self.searchItems.append(SearchItem(id: id, title: title, detail: locationDetail, time: time, imageURL: imageURL, image: UIImage(named: "placeholder"), didFavor: false))
         }
         self.tableView.reloadData()
     }
@@ -127,7 +140,7 @@ extension MainViewController: UISearchResultsUpdating {
         dateFormatter.timeZone = NSTimeZone(name: "UTC")! as TimeZone
         let date = dateFormatter.date(from: utcTime) // create date from UTC string
         
-        // change to a readable time format and change to local time zone
+        // change to readable time format and local time zone
         dateFormatter.dateFormat = "EEE, MMM d, yyyy h:mm a"
         dateFormatter.timeZone = TimeZone.current
         return dateFormatter.string(from: date!)
@@ -135,6 +148,29 @@ extension MainViewController: UISearchResultsUpdating {
     }
 }
 
+extension UIImageView {
+    
+    public func imageFromServerURL(urlString: String) { //async image downloader
+        
+        URLSession.shared.dataTask(with: NSURL(string: urlString)! as URL, completionHandler: { (data, response, error) -> Void in
+            if error != nil {
+                print(error ?? "")
+                return
+            }
+            DispatchQueue.main.async(execute: { () -> Void in
+                let image = UIImage(data: data!)
+                self.image = image
+            })
+            
+        }).resume()
+    }
+    
+    public func setRounded() { //round corners
+        self.layer.cornerRadius = (self.frame.width / 4) //instead of let radius = CGRectGetWidth(self.frame) / 2
+        self.layer.masksToBounds = true
+    }
+
+}
 
 
 

@@ -37,6 +37,8 @@
                                                     <rect key="frame" x="8" y="24" width="70" height="70"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="70" id="Abo-ht-eN1"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="Wvo-S1-sav"/>
+                                                        <constraint firstAttribute="height" constant="70" id="xVf-Tz-lf6"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNj-qA-kWX">

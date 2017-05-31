@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct SearchItem {
     
@@ -15,5 +16,6 @@ struct SearchItem {
     let detail : String
     let time: String
     let imageURL: String
+    let image: UIImage?
     let didFavor: Bool
 }
